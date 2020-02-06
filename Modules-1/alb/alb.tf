@@ -7,11 +7,12 @@ locals {
   all_ips      = ["0.0.0.0/0"]
 }
 
+# Alb creation will fail, if there is no internet gateway attached
 resource "aws_alb" "web_alb" {
   name               = "${var.web_alb_name}"
   internal           = false
   load_balancer_type = "application"
-  subnets            = ["${var.public_subnet_id}"]
+  subnets            = "${var.public_subnet_id}"
 
   #List of security groups
   security_groups = [aws_security_group.web_alb_sg.id]
@@ -79,7 +80,7 @@ resource "aws_alb" "app_alb" {
   name               = "${var.app_alb_name}"
   internal           = false
   load_balancer_type = "application"
-  subnets            = ["${var.private_subnet_id}"]
+  subnets            = "${var.private_subnet_id}"
 
   #List of security groups
   security_groups = [aws_security_group.app_alb_sg.id]

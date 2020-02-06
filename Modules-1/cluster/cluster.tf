@@ -50,7 +50,7 @@ resource "aws_security_group" "web_instance_sg" {
     cidr_blocks = var.public_cidr_block
   }
 }
-#App configuration
+# App configuration
 resource "aws_launch_configuration" "app_launch_config" {
   name            = "${var.app_config_name}"
   image_id        = "${var.app_ami}"
