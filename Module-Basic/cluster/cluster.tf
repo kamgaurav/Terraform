@@ -1,6 +1,7 @@
 resource "aws_launch_configuration" "launch_conf" {
-  image_id        = var.ami
-  instance_type   = var.instance_type
+  image_id      = var.ami
+  instance_type = var.instance_type
+  #List of security groups
   security_groups = [aws_security_group.instance_sg.id]
   user_data       = var.user_data
 
@@ -28,23 +29,20 @@ resource "aws_autoscaling_group" "asg" {
 }
 
 resource "aws_security_group" "instance_sg" {
-    name = "${var.cluster_name}-instance"  
+  name = "${var.cluster_name}-instance"
 }
 
 resource "aws_security_group_rule" "allow_server_http_inbound" {
-  type = "ingress"
+  type              = "ingress"
   security_group_id = aws_security_group.instance_sg.id
 
-  from_port = var.server_port
-  to_port = var.server_port
-  protocol = local.tcp_protocol
+  from_port   = var.server_port
+  to_port     = var.server_port
+  protocol    = local.tcp_protocol
   cidr_blocks = local.all_ips
 }
 
 locals {
-    tcp_protocol = "tcp"
-    all_ips = ["0.0.0.0/0"]
+  tcp_protocol = "tcp"
+  all_ips      = ["0.0.0.0/0"]
 }
-
-
-

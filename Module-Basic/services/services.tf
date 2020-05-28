@@ -1,17 +1,16 @@
-
-
 module "asg" {
   source = "../cluster"
 
-  cluster_name = "hello-world-${var.environment}"
-  ami= var.ami
-  user_data = data.template_file.user_data.rendered
+  cluster_name  = "hello-world-${var.environment}"
+  ami           = var.ami
+  user_data     = data.template_file.user_data.rendered
   instance_type = var.instance_type
 
   min_size = var.min_size
   max_size = var.max_size
 
   subnet_ids = data.aws_subnet_ids.subnet1.ids
+  #List of target groups
   target_group_arns = [module.alb_tg.tg_arn]
   health_check_type = "ELB"
 }
@@ -28,17 +27,18 @@ data "template_file" "user_data" {
 module "alb" {
   source = "../alb"
 
-  alb_name = "hello-world-${var.environment}"
+  alb_name   = "hello-world-${var.environment}"
   subnet_ids = data.aws_subnet_ids.subnet1.ids
 
+  #single target group
   target_group_arn = module.alb_tg.tg_arn
 }
 
 module "alb_tg" {
-  source = "../alb_tg"
-  tg_name = "hello-world-${var.environment}"
-  server_port= var.server_port
-  vpc_id = data.aws_vpc.vpc1.id
+  source      = "../alb_tg"
+  tg_name     = "hello-world-${var.environment}"
+  server_port = var.server_port
+  vpc_id      = data.aws_vpc.vpc1.id
 }
 
 data "aws_vpc" "vpc1" {

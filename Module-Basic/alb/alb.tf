@@ -3,6 +3,7 @@ resource "aws_alb" "alb" {
   load_balancer_type = "application"
 
   subnets         = var.subnet_ids
+  #List of security groups
   security_groups = [aws_security_group.alb_sg.id]
 }
 
