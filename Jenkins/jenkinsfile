@@ -1,5 +1,11 @@
 def awsCredentials = [[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'AWS']]
 
+pipeline {
+    agent {
+        node {
+            label 'master'
+        }
+    }
 
 stages {
     stage('Terraform Init') {
