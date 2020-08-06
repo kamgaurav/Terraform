@@ -11,9 +11,6 @@ resource "aws_instance" "web" {
     key_name               = "Linux"
     vpc_security_group_ids = [aws_security_group.default.id]
 
-tags {
-    	Name = "WebServer"
-    }
 }
 
 resource "aws_security_group" "default" {
