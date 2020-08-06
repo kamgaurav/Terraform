@@ -23,10 +23,7 @@ stages {
 pipeline {
 
     agent any
-    tools {
-        maven 'Maven' 
-    }
-	
+   	
     stages {
         stage('Compile stage') {
             steps {
