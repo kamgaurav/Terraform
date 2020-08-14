@@ -49,7 +49,7 @@ pipeline {
               steps {
                 withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'AWS', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']])
                 {
-                  bat "terraform apply -input=false"
+                  bat "terraform apply -input=false -auto-approve"
                 }
               }
         }
