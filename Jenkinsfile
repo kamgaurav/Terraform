@@ -30,23 +30,29 @@ pipeline {
         stage('Compile stage') {
             steps {
                 withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'AWS', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']])
-                bat "terraform init -input=false" 
+                {
+                  bat "terraform init -input=false" 
+                }
+            }
         }
-    }
 
-         stage('testing stage') {
+        stage('testing stage') {
              steps {
                withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'AWS', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']])
-                bat "terraform plan -input=false"
+                {
+                  bat "terraform plan -input=false"
+                }
+              }
         }
-    }
 
-          stage('deployment stage') {
+        stage('deployment stage') {
               steps {
                 withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'AWS', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']])
-                bat "terraform apply -input=false"
+                {
+                  bat "terraform apply -input=false"
+                }
+              }
         }
-    }
 
   }
 
